@@ -22,7 +22,7 @@ div.list-body {
   max-width: calc(100% - 100px);
 }
 html,body {
-  font-family: "Source Sans Pro", serif;
+  font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
 }
 p {
   padding: 0;
