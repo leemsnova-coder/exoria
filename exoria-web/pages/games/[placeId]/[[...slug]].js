@@ -4,28 +4,10 @@ import { useRouter } from 'next/router';
 import Layout from '../../../components/Layout';
 import { useAuth } from '../../../lib/auth';
 import { FallbackArt } from '../../../components/GameCard';
+import Modal from '../../../components/Modal';
 import { getPlace, getVotes, vote, getGameIcons, getJoinTicket } from '../../../lib/services';
 
 const LAUNCH_SCHEME = 'exoria-player';
-
-function Modal({ title, children, onClose }) {
-  useEffect(() => {
-    const onKey = (e) => e.key === 'Escape' && onClose();
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
-  return (
-    <div onClick={(e) => e.target === e.currentTarget && onClose()} style={{ position: 'fixed', inset: 0, background: 'rgba(10,20,30,.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16, zIndex: 40 }}>
-      <div className="panel" role="dialog" aria-modal="true" aria-label={title} style={{ maxWidth: 420, width: '100%' }}>
-        <div className="ph">{title}</div>
-        <div className="pb stack">
-          {children}
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}><button className="btn grey" onClick={onClose} autoFocus>Close</button></div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function GamePage() {
   const router = useRouter();

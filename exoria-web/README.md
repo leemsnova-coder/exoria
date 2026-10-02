@@ -29,11 +29,16 @@ The build stops with an error if either URL is missing.
 | --- | --- |
 | Landing | `/` |
 | Log in | `/login` (only redirects back to paths on this site) |
+| Sign up | `/signup` (Discord verification step, live username check, 13+ age check) |
 | Home dashboard | `/home` (character card, balance, friends, game sorts) |
 | Games | `/games` (sort tabs, keyword search) |
 | Game page | `/games/:placeId/:slug` (Play, like and dislike, stats, description) |
+| Profile | `/profile` goes to `/users/:id` (avatar, status, bio, stats, add or unfriend, games, friends, collectibles tabs) |
+| Friends | `/friends` (accept or decline requests, filter friends) |
+| Catalog | `/catalog` (categories and subcategories, search, sort, "Show more" paging) |
+| Item page | `/catalog/:assetId/:slug` (price, creator, limited info, owned check, buy with confirmation) |
 
-Still to come: sign up, profiles, friends, catalog and item pages, inventory, avatar editor, forum, groups, messages, trades, settings, and develop.
+Still to come: inventory, avatar editor, forum, groups, messages, trades, settings, develop, and the info pages.
 
 ## Play button
 
