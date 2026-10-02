@@ -27,7 +27,7 @@ namespace Roblox.Website.Controllers
     {
 		private void ValidateBotAuth()
         {
-	        if (Request.Headers["BB-botAPIkey"].ToString() != Roblox.Configuration.BotAuthorization)
+	        if (!Roblox.SecretCompare.Matches(Request.Headers["BB-botAPIkey"].ToString(), Roblox.Configuration.BotAuthorization))
 	        {
 		        throw new Exception("Internal");
 	        }

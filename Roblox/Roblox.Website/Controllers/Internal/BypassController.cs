@@ -89,12 +89,10 @@ namespace Roblox.Website.Controllers
 		
         private void ValidateBotAuthorization()
         {
-#if DEBUG == false
-	        if (Request.Headers["bot-auth"].ToString() != Roblox.Configuration.BotAuthorization)
+	        if (!Roblox.SecretCompare.Matches(Request.Headers["bot-auth"].ToString(), Roblox.Configuration.BotAuthorization))
 	        {
-		        throw new Exception("Internal");
+		        throw new Roblox.Services.Exceptions.RobloxException(403, 0, "Forbidden");
 	        }
-#endif
         }
 
         [HttpGetBypass("botapi/migrate-alltypes")]

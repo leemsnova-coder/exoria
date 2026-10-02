@@ -2628,26 +2628,6 @@ public class UsersService : ServiceBase, IService
         await ChangePassword(ticket.userId, newPW);
     }
 	
-	public async Task GiveUserEgg(long userId, long assetId)
-	{
-		// basically giving a user an asset
-		var HasEgg = await db.QueryFirstOrDefaultAsync<bool>(
-			"SELECT COUNT(*) > 0 FROM user_asset WHERE user_id = @user_id AND asset_id = @asset_id",
-			new
-			{
-				user_id = userId,
-				asset_id = assetId,
-			});
-		
-		if (!HasEgg)
-		{
-			await db.ExecuteAsync("INSERT INTO user_asset (user_id, asset_id) VALUES (@user_id, @asset_id)", new
-			{
-				user_id = userId,
-				asset_id = assetId,
-			});
-		}
-	}
 	
 	public async Task GiveUserBadge(long userId, long badgeId)
 	{

@@ -79,11 +79,17 @@ Roblox.Configuration.HCaptchaPrivateKey = configuration.GetSection("HCaptcha:Pri
 Roblox.Configuration.AllowedNetworkPorts = configuration.GetSection("GameServer:AllowedNetworkPorts").GetChildren().Select(c => int.Parse(c.Value));
 Roblox.Configuration.GameServerAuthorization = configuration.GetSection("GameServerAuthorization").Value;
 Roblox.Configuration.RenderAuthorization = configuration.GetSection("Render:Authorization").Value;
-Roblox.Configuration.BotAuthorization = configuration.GetSection("BotAuthorization").Value;
+Roblox.Configuration.BotAuthorization = Roblox.SecretCompare.Require("BotAuthorization", configuration.GetSection("BotAuthorization").Value);
+Roblox.Configuration.UserAgentBypassSecret = Roblox.SecretCompare.Require("UserAgentBypassSecret", configuration.GetSection("UserAgentBypassSecret").Value);
+Roblox.Configuration.VerificationSecret = Roblox.SecretCompare.Require("VerificationSecret", configuration.GetSection("VerificationSecret").Value);
+Roblox.SecretCompare.Require("GameServerAuthorization", Roblox.Configuration.GameServerAuthorization);
+Roblox.SecretCompare.Require("Render:Authorization", Roblox.Configuration.RenderAuthorization);
+Roblox.SecretCompare.Require("DiscordKey", Roblox.Configuration.DiscordKey);
+Roblox.SecretCompare.Require("IPSalt", Roblox.Configuration.IPSalt);
 // game-server config stuff
 IConfiguration gameServerConfig = new ConfigurationBuilder().AddJsonFile("game-servers.json").Build();
 Roblox.Configuration.GameServerIpAddresses = gameServerConfig.GetSection("GameServers").Get<IEnumerable<GameServerConfigEntry>>();
-Roblox.Configuration.RccAuthorization = configuration.GetSection("RccAuthorization").Value;
+Roblox.Configuration.RccAuthorization = Roblox.SecretCompare.Require("RccAuthorization", configuration.GetSection("RccAuthorization").Value);
 Roblox.Configuration.AllowedQuietGetJson = configuration.GetSection("AllowedQuietGetJson").GetChildren().Select(c => c.Value);
 Roblox.Configuration.AssetValidationServiceUrl =
     configuration.GetSection("AssetValidation:BaseUrl").Value;
