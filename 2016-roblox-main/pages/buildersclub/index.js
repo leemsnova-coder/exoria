@@ -43,7 +43,7 @@ const BuildersClub = () => {
       <iframe
         className={classes.iframe}
         src={iframeSrc}
-        title="Builders Club - BubbaBlox"
+        title="Builders Club - Exoria"
         onError={(e) => {
           console.error("iframe failed to load:", e);
         }}

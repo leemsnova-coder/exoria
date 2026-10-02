@@ -98,7 +98,7 @@ const ModalEnable2FA = () => {
   
   if (enabled === false && totp) {
 	store.setModal('MODAL_ENABLE_2FA_BIG');
-    const OTP = `otpauth://totp/BubbaBlox?secret=${totp}&issuer=BubbaBlox`;
+    const OTP = `otpauth://totp/Exoria?secret=${totp}&issuer=Exoria`;
 
     return (
       <div

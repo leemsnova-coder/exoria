@@ -55,7 +55,7 @@ function RobloxApp({ Component, pageProps }) {
 
   return <div>
     <Head>
-      <title>{pageProps.title || 'BubbaBlox'}</title>
+      <title>{pageProps.title || 'Exoria'}</title>
       <link rel='icon' type="image/vnd.microsoft.icon" href='/favicon.ico' />
       <meta name='viewport' content='width=device-width, initial-scale=1' />
     </Head>

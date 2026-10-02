@@ -121,7 +121,7 @@
 					<DownloadIcon /> Download Place RBXL
 				</a>
 				<a class="btn-outline-dark btn w-100" target="_blank" href={`/games/${placeId}/Place`}>
-					<LinkIcon /> View BubbaBlox Place
+					<LinkIcon /> View Exoria Place
 				</a>
 			</div>
 		</div>

@@ -26,7 +26,7 @@ public class PrivateMessagesControllerV1 : ControllerBase
 				name = "ROBLOX",
 				displayName = "ROBLOX",
 			},
-			subject = "Welcome to BubbaBlox!",
+			subject = "Welcome to Exoria!",
 			body = "To earn robux, click Upgrade Now in the sidebar and choose a Builders Club membership or start selling clothing on the catalog.",
             created = "2021-01-13T12:00:00.42Z",
             updated = "2021-01-13T12:00:00.42Z",
