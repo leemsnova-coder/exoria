@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exoria</title>
+<meta name="description" content="Exoria is a community where players build, share and play games together.">
+<link rel="icon" type="image/png" href="/img/exoria_icon.png">
+<style>
+@font-face { font-family: 'Source Sans Pro'; font-weight: 400; font-style: normal; font-display: swap; src: url('/img/fonts/source-sans-pro-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Source Sans Pro'; font-weight: 600; font-style: normal; font-display: swap; src: url('/img/fonts/source-sans-pro-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Source Sans Pro'; font-weight: 700; font-style: normal; font-display: swap; src: url('/img/fonts/source-sans-pro-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Source Sans Pro'; font-weight: 900; font-style: normal; font-display: swap; src: url('/img/fonts/source-sans-pro-latin-900-normal.woff2') format('woff2'); }
+
+:root {
+  --red: #e3120b;
+  --red-dark: #b30d07;
+  --ink: #1d1d1f;
+  --muted: #5f6368;
+  --line: #dadce0;
+  --panel: #ffffff;
+  --bg: #f4f4f6;
+  --blue: #0074bd;
+  --discord: #5865f2;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  font-size: 16px;
+  line-height: 1.45;
+}
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Top bar */
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--blue);
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+}
+.topbar-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; gap: 24px;
+  padding: 8px 16px; flex-wrap: wrap;
+}
+.topbar .brand img { height: 34px; display: block; }
+.topbar nav { display: flex; gap: 18px; }
+.topbar nav a { color: #fff; font-weight: 600; }
+.login-form { margin-left: auto; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.login-form input[type=text], .login-form input[type=password] {
+  width: 150px; padding: 6px 8px; border: 0; border-radius: 3px; font: inherit; font-size: 14px;
+}
+.login-form button {
+  padding: 6px 14px; border: 1px solid #fff; background: transparent; color: #fff;
+  border-radius: 3px; font: inherit; font-weight: 600; cursor: pointer;
+}
+.login-form button:hover { background: rgba(255,255,255,.15); }
+.login-links { width: 100%; display: flex; gap: 16px; justify-content: flex-end; font-size: 13px; }
+.login-links a { color: #dfeefa; }
+.login-error {
+  width: 100%; text-align: right; font-size: 13px; font-weight: 600;
+  color: #fff; background: var(--red); padding: 4px 8px; border-radius: 3px; display: none;
+}
+
+/* Hero */
+.hero {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(227,18,11,.18), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(0,116,189,.22), transparent 45%),
+    linear-gradient(160deg, #1b1e2b 0%, #262a3d 55%, #1b1e2b 100%);
+  color: #fff;
+  padding: 56px 16px 64px;
+}
+.hero-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center;
+}
+.hero-brand { text-align: center; }
+.hero-brand img { width: 100%; max-width: 520px; height: auto; filter: drop-shadow(0 6px 18px rgba(0,0,0,.45)); }
+.hero-brand h1 { font-size: 34px; font-weight: 700; margin: 18px 0 6px; }
+.hero-brand p { font-size: 18px; color: #c9cbd6; margin: 0; }
+
+/* Sign-up card */
+.card {
+  background: var(--panel); color: var(--ink);
+  border-radius: 8px; padding: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  max-width: 420px; width: 100%; justify-self: center;
+}
+.card h2 { margin: 0 0 4px; font-size: 24px; font-weight: 700; }
+.card .sub { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+.discord-box {
+  border: 1px solid var(--line); border-radius: 6px; padding: 14px; margin-bottom: 16px; text-align: center;
+}
+.btn-discord {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--discord); color: #fff !important; font-weight: 700;
+  padding: 10px 18px; border-radius: 4px; text-decoration: none !important;
+}
+.btn-discord:hover { background: #4752c4; }
+.btn-discord svg { width: 22px; height: 22px; fill: #fff; }
+.discord-profile { display: none; align-items: center; justify-content: center; gap: 10px; }
+.discord-profile img { width: 40px; height: 40px; border-radius: 50%; }
+.discord-profile .name { font-weight: 700; }
+.discord-profile .ok { color: #1e8e3e; font-size: 13px; font-weight: 600; }
+.field { margin-bottom: 12px; }
+.field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #3c4043; }
+.field input, .field select {
+  width: 100%; padding: 9px 10px; font: inherit; font-size: 15px;
+  border: 1px solid var(--line); border-radius: 4px; background: #fff;
+}
+.field input:focus, .field select:focus { outline: 2px solid var(--blue); outline-offset: -1px; border-color: var(--blue); }
+.hint { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.row { display: flex; gap: 8px; }
+.row > * { flex: 1; }
+.gender { display: flex; gap: 8px; }
+.gender label {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  border: 1px solid var(--line); border-radius: 4px; padding: 8px; cursor: pointer; font-weight: 600; font-size: 14px; margin: 0;
+}
+.gender input { width: auto; margin: 0; }
+.gender label:has(input:checked) { border-color: var(--blue); background: #e8f2fb; color: var(--blue); }
+.btn-signup {
+  width: 100%; margin-top: 6px; padding: 11px; border: 0; border-radius: 4px;
+  background: var(--red); color: #fff; font: inherit; font-size: 18px; font-weight: 700; cursor: pointer;
+}
+.btn-signup:hover:not(:disabled) { background: var(--red-dark); }
+.btn-signup:disabled { background: #b8b8bd; cursor: not-allowed; }
+.form-msg { margin-top: 10px; font-size: 14px; font-weight: 600; text-align: center; }
+.form-msg.error { color: var(--red); }
+.form-msg.info { color: var(--muted); }
+
+/* About */
+.section { max-width: 1200px; margin: 0 auto; padding: 56px 16px; }
+.section h2 { font-size: 30px; font-weight: 700; margin: 0 0 8px; text-align: center; }
+.section .lead { text-align: center; color: var(--muted); max-width: 680px; margin: 0 auto 32px; font-size: 18px; }
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.feature { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 22px; }
+.feature .icon {
+  width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center;
+  background: var(--red); color: #fff; font-weight: 900; font-size: 22px; margin-bottom: 12px;
+}
+.feature h3 { margin: 0 0 6px; font-size: 20px; }
+.feature p { margin: 0; color: var(--muted); }
+
+footer { background: #1b1e2b; color: #a9abb8; font-size: 14px; }
+footer .inner { max-width: 1200px; margin: 0 auto; padding: 24px 16px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+footer a { color: #dfe1ea; }
+footer .copy { margin-left: auto; }
+
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+  .features { grid-template-columns: 1fr; }
+  .login-form { margin-left: 0; width: 100%; }
+  .login-form input[type=text], .login-form input[type=password] { flex: 1; min-width: 0; width: auto; }
+  .login-links, .login-error { justify-content: flex-start; text-align: left; }
+  .topbar nav { display: none; }
+}
+</style>
+<script>
+  // Send signed-in users straight to their home page.
+  (function () {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/apisite/users/v1/users/authenticated', true);
+    xhr.withCredentials = true;
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        try {
+          var r = JSON.parse(xhr.responseText);
+          if (r.id && r.name) window.location.href = '/home';
+        } catch (e) {}
+      }
+    };
+    xhr.send();
+  })();
+</script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/" aria-label="Exoria home"><img src="/img/exoria_logo.png" alt="Exoria"></a>
+    <nav>
+      <a href="#signup">Play</a>
+      <a href="#about">About</a>
+    </nav>
+    <form class="login-form" action="/login" method="post">
+      <input type="text" name="username" placeholder="Username" autocomplete="username" aria-label="Username">
+      <input type="password" name="password" placeholder="Password" autocomplete="current-password" aria-label="Password">
+      <button type="submit">Log In</button>
+      <div class="login-error" id="login-error"></div>
+      <div class="login-links">
+        <a href="/forgotpasswordOrUsername">Forgot username/password?</a>
+        <a href="/login-with-discord">Log in with Discord</a>
+      </div>
+    </form>
+  </div>
+</header>
+
+<section class="hero" id="signup">
+  <div class="hero-inner">
+    <div class="hero-brand">
+      <img src="/img/exoria_logo.png" alt="Exoria">
+      <h1>Build it. Share it. Play it.</h1>
+      <p>Join Exoria and play games made by the community.</p>
+    </div>
+
+    <div class="card">
+      <h2>Sign up and start having fun!</h2>
+      <p class="sub">First, verify your Discord account. It keeps one account per person.</p>
+
+      <div class="discord-box">
+        <a class="btn-discord" id="discord-verify" href="/discordverify">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 4.4A19.6 19.6 0 0 0 15.4 3l-.6 1.3a18.2 18.2 0 0 0-5.6 0L8.6 3a19.6 19.6 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1a19.8 19.8 0 0 0 6 3l1.3-2.1a12.8 12.8 0 0 1-2-1l.5-.4a14.1 14.1 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.7 19.7 0 0 0 6-3c.5-5.2-.9-9.7-3.6-13.7ZM8.3 15.3c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Zm7.4 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>
+          Verify with Discord
+        </a>
+        <div class="discord-profile" id="discord-profile">
+          <img id="discord-avatar" alt="">
+          <div>
+            <div class="name" id="discord-name"></div>
+            <div class="ok">Discord verified</div>
+          </div>
+        </div>
+      </div>
+
+      <form id="signup-form" novalidate>
+        <div class="field">
+          <label for="su-username">Username</label>
+          <input id="su-username" name="username" autocomplete="username" maxlength="20" required>
+          <div class="hint">3 to 20 characters: letters, numbers and underscores. It can't start or end with an underscore.</div>
+        </div>
+        <div class="field">
+          <label for="su-password">Password</label>
+          <input id="su-password" name="password" type="password" autocomplete="new-password" required>
+          <div class="hint">At least 8 characters.</div>
+        </div>
+        <div class="field">
+          <label for="su-confirm">Confirm password</label>
+          <input id="su-confirm" type="password" autocomplete="new-password" required>
+        </div>
+        <div class="field">
+          <label>Birthday</label>
+          <div class="row">
+            <select id="su-month" aria-label="Month" required><option value="">Month</option></select>
+            <select id="su-day" aria-label="Day" required><option value="">Day</option></select>
+            <select id="su-year" aria-label="Year" required><option value="">Year</option></select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Gender</label>
+          <div class="gender">
+            <label><input type="radio" name="gender" value="3"> Female</label>
+            <label><input type="radio" name="gender" value="2"> Male</label>
+          </div>
+        </div>
+        <button class="btn-signup" id="signup-button" type="submit" disabled>Sign Up</button>
+        <div class="form-msg info" id="signup-msg">Verify your Discord account to sign up.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <h2>What is Exoria?</h2>
+  <p class="lead">Exoria is a place to hang out with friends, play games built by other players and make your own.</p>
+  <div class="features">
+    <div class="feature">
+      <div class="icon">▶</div>
+      <h3>Play</h3>
+      <p>Jump into games made by the community, from obbies to roleplay.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">✦</div>
+      <h3>Create</h3>
+      <p>Customize your avatar with items from the catalog and build your own places.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">☺</div>
+      <h3>Connect</h3>
+      <p>Add friends, join groups and talk on the forums.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="inner">
+    <a href="/info/terms-of-service">Terms of Service</a>
+    <a href="/info/privacy">Privacy Policy</a>
+    <span class="copy">© Exoria</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  function param(name) {
+    var m = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+  }
+  function cookie(name) {
+    var v = '; ' + document.cookie, parts = v.split('; ' + name + '=');
+    return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  }
+
+  // Messages passed back by the backend after a redirect
+  var loginMsg = param('loginmsg');
+  if (loginMsg) {
+    var le = document.getElementById('login-error');
+    le.textContent = loginMsg; le.style.display = 'block';
+  }
+  var msg = document.getElementById('signup-msg');
+  function showMsg(text, kind) { msg.textContent = text; msg.className = 'form-msg ' + (kind || 'error'); }
+  var signupMsg = param('signupmsg');
+  if (signupMsg) showMsg(signupMsg, 'error');
+
+  // Birthday dropdowns
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var mSel = document.getElementById('su-month'), dSel = document.getElementById('su-day'), ySel = document.getElementById('su-year');
+  months.forEach(function (m, i) { mSel.add(new Option(m, i + 1)); });
+  for (var d = 1; d <= 31; d++) dSel.add(new Option(d, d));
+  var thisYear = new Date().getFullYear();
+  for (var y = thisYear; y >= thisYear - 100; y--) ySel.add(new Option(y, y));
+
+  // Discord verification state (set by the backend after /discordverify)
+  var btn = document.getElementById('signup-button');
+  var profile = null;
+  try {
+    var raw = cookie('discord_profile');
+    if (raw) profile = JSON.parse(decodeURIComponent(raw));
+  } catch (e) { profile = null; }
+  if (profile) {
+    document.getElementById('discord-verify').style.display = 'none';
+    var box = document.getElementById('discord-profile');
+    box.style.display = 'flex';
+    var name = profile.username || 'Discord user';
+    if (profile.discriminator && profile.discriminator !== '0') name += '#' + profile.discriminator;
+    document.getElementById('discord-name').textContent = name;
+    var av = document.getElementById('discord-avatar');
+    if (profile.avatar && profile.id) {
+      var ext = profile.avatar.indexOf('a_') === 0 ? 'gif' : 'png';
+      av.src = 'https://cdn.discordapp.com/avatars/' + profile.id + '/' + profile.avatar + '.' + ext + '?size=80';
+    } else {
+      av.src = 'https://cdn.discordapp.com/embed/avatars/0.png';
+    }
+    btn.disabled = false;
+    if (!signupMsg) showMsg('', 'info');
+  }
+
+  // Sign up
+  document.getElementById('signup-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target;
+    var username = f.username.value.trim();
+    var password = f.password.value;
+    var confirm = document.getElementById('su-confirm').value;
+    var g = f.querySelector('input[name=gender]:checked');
+
+    if (!profile) return showMsg('Verify your Discord account first.');
+    if (username.length < 3 || username.length > 20) return showMsg('Username must be 3 to 20 characters.');
+    if (password.length < 8) return showMsg('Password must be at least 8 characters.');
+    if (password !== confirm) return showMsg('Passwords do not match.');
+    if (!mSel.value || !dSel.value || !ySel.value) return showMsg('Please enter your birthday.');
+    if (!g) return showMsg('Please choose a gender.');
+
+    var birthday = ySel.value + '-' + ('0' + mSel.value).slice(-2) + '-' + ('0' + dSel.value).slice(-2);
+    var body = new URLSearchParams({ username: username, password: password, birthday: birthday, gender: g.value, context: 'Landing' });
+
+    btn.disabled = true;
+    showMsg('Creating your account...', 'info');
+    fetch('/login/signup', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    }).then(function (res) {
+      if (res.ok || res.redirected) {
+        var target = res.redirected ? new URL(res.url) : null;
+        // The backend redirects back to "/?signupmsg=..." when signup is turned off
+        if (target && target.pathname === '/' && target.searchParams.get('signupmsg')) {
+          btn.disabled = false;
+          return showMsg(target.searchParams.get('signupmsg'));
+        }
+        window.location.href = '/home';
+        return;
+      }
+      return res.json().then(function (data) {
+        btn.disabled = false;
+        showMsg((data && data.message) || 'Sign up failed. Please try again.');
+      }, function () {
+        btn.disabled = false;
+        showMsg('Sign up failed (error ' + res.status + '). Please try again.');
+      });
+    }).catch(function () {
+      btn.disabled = false;
+      showMsg('Could not reach the server. Is the backend running?');
+    });
+  });
+})();
+</script>
+</body>
+</html>
