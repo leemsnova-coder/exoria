@@ -8,6 +8,9 @@ echo.
 if not exist "%ROOT%Roblox\Roblox.Website\appsettings.json" echo MISSING: Roblox\Roblox.Website\appsettings.json
 if not exist "%ROOT%2016-roblox-main\config.json" echo MISSING: 2016-roblox-main\config.json
 
+rem --- Make the frontend images available through the backend (/img) ---
+robocopy "%ROOT%2016-roblox-main\public\img" "%ROOT%api\public\img" /E /XC /XN /XO /NFL /NDL /NJH /NJS /NP >nul
+
 rem --- Redis ---
 tasklist /FI "IMAGENAME eq redis-server.exe" | find /I "redis-server.exe" >nul
 if not errorlevel 1 goto redis_ok
